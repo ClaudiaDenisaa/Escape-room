@@ -14,19 +14,33 @@ public class Interactiune : MonoBehaviour
     private int cestiSparte = 0;       // Memoreaza cate am spart
     public int totalCestiDeSpart = 3;  // De cate e nevoie pentru a castiga
 
+    private Camera cameraPrincipala; // NOU: Variabila pentru a gasi camera
+
+    void Start()
+    {
+        // NOU: Initializam camera la pornirea jocului
+        cameraPrincipala = GetComponent<Camera>();
+        if (cameraPrincipala == null)
+        {
+            cameraPrincipala = Camera.main;
+        }
+    }
+
     void Update()
     {
         // Cand apasam click-stanga (0) pe mouse
         if (Input.GetMouseButtonDown(0))
         {
-            // Tragem o raza din centrul camerei drept in fata
-            Ray raza = new Ray(transform.position, transform.forward);
+            // MODIFICAREA PRINCIPALA: 
+            // Tragem o raza din camera, trecand exact prin coordonatele cursorului de la mouse de pe ecran
+            Ray raza = cameraPrincipala.ScreenPointToRay(Input.mousePosition);
             RaycastHit ceAmLovit;
 
             // Daca raza loveste ceva in limita a 3 metri...
             if (Physics.Raycast(raza, out ceAmLovit, distantaActiune))
             {
                 Debug.Log("Raza a lovit: " + ceAmLovit.collider.name + " care are tag-ul: " + ceAmLovit.collider.tag);
+
                 // ...si acel ceva are eticheta "Usa"
                 if (ceAmLovit.collider.CompareTag("Usa"))
                 {
@@ -37,7 +51,8 @@ public class Interactiune : MonoBehaviour
                     // Salvam obiectul 3D ca sa il putem pune la loc mai tarziu
                     biletulDePeJos = ceAmLovit.collider.gameObject;
                     CitesteBilet();
-                }// DACA AM LOVIT O CEASCA (CEVA CASABIL)
+                }
+                // DACA AM LOVIT O CEASCA (CEVA CASABIL)
                 else if (ceAmLovit.collider.CompareTag("Casabil"))
                 {
                     // 1. Distrugem ceasca
