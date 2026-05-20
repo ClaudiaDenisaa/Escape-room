@@ -6,6 +6,7 @@ public class PlayerInteractor : MonoBehaviour
 {
     public float interactDistance = 3f;
     public Camera playerCamera;
+    public float sphereRadius = 0.3f;
 
     void Update()
     {
@@ -13,7 +14,7 @@ public class PlayerInteractor : MonoBehaviour
         {
             Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
+            if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hit, interactDistance))
             {
                 RoomQuizSimple quiz = hit.collider.GetComponent<RoomQuizSimple>();
                 if (quiz != null)
@@ -21,7 +22,6 @@ public class PlayerInteractor : MonoBehaviour
                     quiz.Interact();
                     return;
                 }
-
                 InteractableInfo info = hit.collider.GetComponent<InteractableInfo>();
                 if (info != null)
                 {

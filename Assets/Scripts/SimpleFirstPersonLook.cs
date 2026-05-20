@@ -12,6 +12,8 @@ public class SimpleFirstPersonLook : MonoBehaviour
     private void Start()
     {
         xRotation = 0f;
+        Cursor.lockState = CursorLockMode.Locked; 
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -25,6 +27,6 @@ public class SimpleFirstPersonLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);
+        playerBody.Rotate(Vector3.up * mouseX, Space.World);
     }
 }

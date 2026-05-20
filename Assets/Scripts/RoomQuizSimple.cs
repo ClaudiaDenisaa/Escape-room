@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class SimpleQuestion
@@ -13,6 +14,8 @@ public class SimpleQuestion
 public class RoomQuizSimple : MonoBehaviour
 {
     public SimpleQuestion[] questions = new SimpleQuestion[5];
+
+    [SerializeField] private string nextScene = "Camera2";
 
     private int currentQuestionIndex = 0;
     private bool solved = false;
@@ -27,14 +30,14 @@ public class RoomQuizSimple : MonoBehaviour
     {
         if (solved)
         {
-            ShowText("Camera este deja completata.");
+            SceneManager.LoadScene(nextScene);
             return;
         }
 
         if (currentQuestionIndex >= questions.Length)
         {
             solved = true;
-            ShowText("Felicitari! Ai completat camera.");
+            ShowText("Felicitari! Ai completat camera. Interactioneaza din nou pentru a progresa la urmatoarea camera.");
             return;
         }
 
