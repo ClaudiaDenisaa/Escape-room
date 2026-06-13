@@ -1,0 +1,2 @@
+Assets/George/ancient_egyptian_mummy_cartonnage_and_coffin.glb filter=lfs diff=lfs merge=lfs -text
+Assets/George/ancient_egyptian_mummy_cartonnage_and_coffin.fbx filter=lfs diff=lfs merge=lfs -text
